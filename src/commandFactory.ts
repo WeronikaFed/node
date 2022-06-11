@@ -1,4 +1,4 @@
-import { Command, AddCommand, CatCommand, CdCommand, CompressCommand, CpCommand, DecompressCommand, HashCommand, LsCommand, MvCommand, OsCommand, RmCommand, RnCommand, UpCommand } from "./command";
+import { Command, AddCommand, CatCommand, CdCommand, CompressCommand, CpCommand, DecompressCommand, HashCommand, LsCommand, MvCommand, OsCommand, RmCommand, RnCommand, UpCommand, ExitCommand } from "./command";
 import { CurrentPath } from "./currentPath";
 
 export class CommandFactory {
@@ -16,6 +16,7 @@ export class CommandFactory {
     ["hash", (params: Array<string>, currentPath: CurrentPath) => new HashCommand(params, currentPath)],
     ["compress", (params: Array<string>, currentPath: CurrentPath) => new CompressCommand(params, currentPath)],
     ["decompress", (params: Array<string>, currentPath: CurrentPath) => new DecompressCommand(params, currentPath)],
+    [".exit", (params: Array<string>, currentPath: CurrentPath) => new ExitCommand(params, currentPath)]
   ]);
   create(args: string, currentDirectory: CurrentPath): Command {
     let preparedArgs = args
@@ -28,7 +29,7 @@ export class CommandFactory {
     if(!this.commandWithNames.has(preparedArgs[0])) {
         throw new Error ("Such command is not found!")
     }
-    let creator = this.commandWithNames.get(preparedArgs[0]);
+    let creator = this.commandWithNames.get(preparedArgs[0])!;
     return creator(preparedArgs.slice(1), currentDirectory)
   }
 }

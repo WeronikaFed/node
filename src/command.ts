@@ -1,5 +1,5 @@
 import process from "process";
-import path, { PlatformPath } from "path";
+import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -186,3 +186,10 @@ export class DecompressCommand extends Command {
     console.log("unZipped Successfully");
   }
 }
+
+export class ExitCommand extends Command {
+  execute(): void {
+    process.exit();
+  }  
+}
+
